@@ -1,0 +1,60 @@
+pipeline {
+    agent any
+    
+    environment {
+        N8N_WEBHOOK_URL = 'http://localhost:5678/webhook/jenkins-failure-webhook'
+    }
+    
+    stages {
+        stage('Build') {
+            steps {
+                // Your build steps
+                sh 'echo "Building application..."'
+            }
+        }
+        
+        stage('Test') {
+            steps {
+                // Your test steps
+                sh 'echo "Running tests..."'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                // Your deployment steps
+                sh 'echo "Deploying application..."'
+            }
+        }
+    }
+    
+    post {
+        failure {
+            script {
+                def errorLog = ""
+                try {
+                    errorLog = currentBuild.rawBuild.getLog(100).join('\n')
+                } catch (Exception e) {
+                    errorLog = "Could not retrieve build log: ${e.message}"
+                }
+                
+                def payload = [
+                    job_name: env.JOB_NAME,
+                    build_status: currentBuild.currentResult,
+                    build_url: env.BUILD_URL,
+                    build_number: env.BUILD_NUMBER,
+                    error_log: errorLog,
+                    timestamp: new Date().format("yyyy-MM-dd HH:mm:ss")
+                ]
+                
+                httpRequest(
+                    httpMode: 'POST',
+                    url: env.N8N_WEBHOOK_URL,
+                    contentType: 'APPLICATION_JSON',
+                    requestBody: groovy.json.JsonBuilder(payload).toString(),
+                    validResponseCodes: '200:299'
+                )
+            }
+        }
+    }
+}
