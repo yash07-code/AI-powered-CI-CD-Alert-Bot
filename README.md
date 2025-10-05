@@ -2,7 +2,7 @@
 
 
 An intelligent CI/CD monitoring system that automatically analyzes pipeline failures using OpenAI and sends detailed alerts via Telegram. When a Jenkins pipeline fails, this system captures the error logs, processes them through AI for expert analysis, and delivers actionable insights directly to your team's Telegram chat.
-🚀 Features
+Features
 
 Automatic Failure Detection: Monitors Jenkins pipelines for failures
 AI-Powered Analysis: Uses OpenAI GPT-3.5-turbo to analyze error logs and suggest fixes
@@ -11,7 +11,7 @@ Rich Formatting: Markdown-formatted messages with emojis for better visibility
 Comprehensive Logging: Detailed error logs and build information
 Scalable Architecture: Easy to extend with additional notification channels
 
-📋 Table of Contents
+Table of Contents
 
 Prerequisites
 System Requirements
@@ -23,7 +23,7 @@ Troubleshooting
 Contributing
 License
 
-🔧 Prerequisites
+Prerequisites
 Software Requirements
 SoftwareVersionPurposeDocker20.10+Container runtime for n8nDocker Compose2.0+Multi-container orchestrationJenkins2.400+CI/CD pipeline automationNode.js18+(Optional) For local developmentGit2.30+Version control
 Service Accounts & APIs
